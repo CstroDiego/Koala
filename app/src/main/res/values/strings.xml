@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Koala</string>
+    <string name="texto_agregar_registro">Agregar nuevo registro</string>
+    <string name="texto_consultar_registro">Consultar registro</string>
 </resources>
