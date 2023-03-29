@@ -1,5 +1,6 @@
 package mx.itson.koala
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextMenu
@@ -45,6 +46,10 @@ class UsuarioListActivity : AppCompatActivity() {
         val usuario = listaUsuarios?.getItemAtPosition(usuarioInfo.position) as Usuario
         when (item.itemId) {
             R.id.mnEditar -> {
+                val intent = Intent(this, UsuarioFormActivity::class.java)
+                intent.putExtra("usuario", usuario)
+                startActivity(intent)
+
                 Toast.makeText(this, "Editar el usuario ${usuario.nombre}", Toast.LENGTH_SHORT)
                     .show()
                 return true

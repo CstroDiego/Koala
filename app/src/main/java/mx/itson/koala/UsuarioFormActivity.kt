@@ -8,9 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import mx.itson.koala.entidades.Usuario
 
 class UsuarioFormActivity : AppCompatActivity() {
+
+    private lateinit var txtNombre: EditText
+    private lateinit var txtTelefono: EditText
+    private lateinit var txtEmail: EditText
+
+    private var usuario: Usuario? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_usuario_form)
+
+        usuario = intent.getSerializableExtra("usuario") as Usuario?
     }
 
     fun agregarUsuario(view: View) {
