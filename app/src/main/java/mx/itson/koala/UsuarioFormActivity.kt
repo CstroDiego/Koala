@@ -18,7 +18,7 @@ class UsuarioFormActivity : AppCompatActivity() {
             val nombre = findViewById<EditText>(R.id.txtNombre)
             val telefono = findViewById<EditText>(R.id.txtTelefono)
             val email = findViewById<EditText>(R.id.txtEmail)
-            Usuario.guardar(this, nombre.text.toString(), telefono.text.toString(), email.text.toString())
+            Usuario().guardar(this, nombre.text.toString(), telefono.text.toString(), email.text.toString())
             Toast.makeText(this, "Usuario agregado", Toast.LENGTH_SHORT).show()
             finish()
         } catch (ex: Exception) {

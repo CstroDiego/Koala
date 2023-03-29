@@ -7,41 +7,56 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import mx.itson.koala.persistencia.KoalaDB
 
-object Usuario {
+@SuppressLint("StaticFieldLeak")
+class Usuario {
 
     var id: Int = 0
     var nombre: String? = null
     var telefono: String? = null
     var email: String? = null
 
-    @SuppressLint("LongLogTag")
+    constructor()
+
+    constructor(id: Int, nombre: String?, telefono: String?, email: String?) {
+        this.id = id
+        this.nombre = nombre
+        this.telefono = telefono
+        this.email = email
+    }
+
+    private lateinit var contexto: Context
+    private lateinit var baseDatos: SQLiteDatabase
+
+    fun inicializar(context: Context) {
+        contexto = context.applicationContext
+        val koalaDB = KoalaDB(contexto, "KoalaDB", null, 1)
+        baseDatos = koalaDB.writableDatabase
+    }
+
     fun guardar(context: Context, nombre: String?, telefono: String, email: String) {
+        inicializar(context)
         try {
-            val KoalaDB = KoalaDB(context, "KoalaDB", null, 1)
-            val baseDatos: SQLiteDatabase = KoalaDB.writableDatabase
             val valores = ContentValues()
             valores.put("nombre", nombre)
             valores.put("telefono", telefono)
             valores.put("email", email)
             baseDatos.insert("Usuario", null, valores)
         } catch (ex: Exception) {
-
             Log.e("ocurrio un error al guardar usuario", ex.toString())
         }
     }
 
-    fun obtener(context: Context): List<Usuario> {
+    fun obtenerTodos(context: Context): List<Usuario> {
+        inicializar(context)
         val usuarios: MutableList<Usuario> = ArrayList()
         try {
-            val KoalaDB = KoalaDB(context, "KoalaDB", null, 1)
-            val baseDatos: SQLiteDatabase = KoalaDB.readableDatabase
             val cursor = baseDatos.rawQuery("SELECT id, nombre, telefono, email FROM usuario", null)
             while (cursor.moveToNext()) {
-                val usuario = Usuario.apply {
-                    nombre = cursor.getString(1)
-                    telefono = cursor.getString(2)
-                    email = cursor.getString(3)
-                }
+                val usuario = Usuario()
+                usuario.id = cursor.getInt(0)
+                usuario.nombre = cursor.getString(1)
+                usuario.telefono = cursor.getString(2)
+                usuario.email = cursor.getString(3)
                 usuarios.add(usuario)
             }
         } catch (ex: Exception) {
