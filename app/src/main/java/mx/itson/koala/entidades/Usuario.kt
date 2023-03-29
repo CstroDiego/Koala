@@ -83,7 +83,7 @@ class Usuario : Serializable {
         return usuario
     }
 
-    fun editar(context: Context, id: Int, nombre: String?, telefono: String, email: String) {
+    fun editar(context: Context, id: Int?, nombre: String?, telefono: String?, email: String?) {
         inicializar(context)
         try {
             val valores = ContentValues()

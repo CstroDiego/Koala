@@ -62,4 +62,9 @@ class UsuarioListActivity : AppCompatActivity() {
             else -> return super.onContextItemSelected(item)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        cargarLista()
+    }
 }
